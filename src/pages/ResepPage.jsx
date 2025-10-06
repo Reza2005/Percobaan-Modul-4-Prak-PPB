@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { ResepMakanan } from "../data/makanan";
 import { ResepMinuman } from "../data/minuman";
-import RecipeCard from "../components/recipes/RecipeCard.jsx"; // Path diperbarui
+import RecipeCard from "../components/recipes/RecipeCard.jsx";
 import Pagination from "../components/recipes/Pagination.jsx";
 
 export default function ResepPage({ onNavigate }) {
@@ -13,10 +13,12 @@ export default function ResepPage({ onNavigate }) {
   useEffect(() => {
     const allMakanan = Object.values(ResepMakanan.resep).map((recipe) => ({
       ...recipe,
+      id: `makanan-${recipe.id}`, // ID unik
       type: "makanan",
     }));
     const allMinuman = Object.values(ResepMinuman.resep).map((recipe) => ({
       ...recipe,
+      id: `minuman-${recipe.id}`, // ID unik
       type: "minuman",
     }));
     setRecipes([...allMakanan, ...allMinuman]);

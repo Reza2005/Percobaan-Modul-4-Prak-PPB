@@ -3,11 +3,16 @@ import { ResepMakanan } from "../data/makanan";
 import { ResepMinuman } from "../data/minuman";
 
 export default function DetailPage({ recipeId }) {
-  const allRecipes = {
-    ...ResepMakanan.resep,
-    ...ResepMinuman.resep,
-  };
-  const recipe = Object.values(allRecipes).find((r) => r.id === recipeId);
+  const allMakanan = Object.values(ResepMakanan.resep).map((recipe) => ({
+    ...recipe,
+    id: `makanan-${recipe.id}`, // ID unik
+  }));
+  const allMinuman = Object.values(ResepMinuman.resep).map((recipe) => ({
+    ...recipe,
+    id: `minuman-${recipe.id}`, // ID unik
+  }));
+  const allRecipes = [...allMakanan, ...allMinuman];
+  const recipe = allRecipes.find((r) => r.id === recipeId);
 
   if (!recipe) {
     return <div className="text-center py-16">Resep tidak ditemukan.</div>;

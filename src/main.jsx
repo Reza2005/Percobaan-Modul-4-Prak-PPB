@@ -37,7 +37,7 @@ function AppRoot() {
       case 'detail':
         return <DetailPage recipeId={detailRecipeId} />;
       case 'favorite':
-        return <FavoritePage />;
+        return <FavoritePage onNavigate={handleNavigation} />; // Prop ditambahkan
       case 'profile':
         return <ProfilePage />;
       default:

@@ -1,6 +1,6 @@
 // src/pages/FavoritePage.jsx
 import { useState, useEffect } from "react";
-import RecipeCard from "../components/recipes/RecipeCard.jsx"; // Path diperbarui
+import RecipeCard from "../components/recipes/RecipeCard.jsx";
 import { ResepMakanan } from "../data/makanan";
 import { ResepMinuman } from "../data/minuman";
 
@@ -8,10 +8,17 @@ export default function FavoritePage({ onNavigate }) {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   useEffect(() => {
-    const allRecipes = [
-      ...Object.values(ResepMakanan.resep),
-      ...Object.values(ResepMinuman.resep),
-    ];
+    const allMakanan = Object.values(ResepMakanan.resep).map((recipe) => ({
+      ...recipe,
+      id: `makanan-${recipe.id}`, // ID unik
+      type: "makanan",
+    }));
+    const allMinuman = Object.values(ResepMinuman.resep).map((recipe) => ({
+      ...recipe,
+      id: `minuman-${recipe.id}`, // ID unik
+      type: "minuman",
+    }));
+    const allRecipes = [...allMakanan, ...allMinuman];
     const favoriteIds = JSON.parse(localStorage.getItem("favorites") || "[]");
     setFavoriteRecipes(
       allRecipes.filter((recipe) => favoriteIds.includes(recipe.id))
