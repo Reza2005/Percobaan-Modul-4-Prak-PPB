@@ -3,8 +3,9 @@ import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import SplashScreen from './pages/SplashScreen';
 import HomePage from './pages/HomePage';
-import MakananPage from './pages/MakananPage';
-import MinumanPage from './pages/MinumanPage';
+import ResepPage from './pages/ResepPage';
+import DetailPage from './pages/DetailPage';
+import FavoritePage from './pages/FavoritePage';
 import ProfilePage from './pages/ProfilePage';
 import DesktopNavbar from './components/navbar/DesktopNavbar';
 import MobileNavbar from './components/navbar/MobileNavbar';
@@ -14,23 +15,29 @@ import PWABadge from './PWABadge';
 function AppRoot() {
   const [showSplash, setShowSplash] = useState(true);
   const [currentPage, setCurrentPage] = useState('home');
+  const [detailRecipeId, setDetailRecipeId] = useState(null);
 
   const handleSplashComplete = () => {
     setShowSplash(false);
   };
 
-  const handleNavigation = (page) => {
+  const handleNavigation = (page, recipeId = null) => {
     setCurrentPage(page);
+    if (page === 'detail') {
+      setDetailRecipeId(recipeId);
+    }
   };
 
   const renderCurrentPage = () => {
     switch (currentPage) {
       case 'home':
         return <HomePage />;
-      case 'makanan':
-        return <MakananPage />;
-      case 'minuman':
-        return <MinumanPage />;
+      case 'resep':
+        return <ResepPage onNavigate={handleNavigation} />;
+      case 'detail':
+        return <DetailPage recipeId={detailRecipeId} />;
+      case 'favorite':
+        return <FavoritePage />;
       case 'profile':
         return <ProfilePage />;
       default:
@@ -44,17 +51,11 @@ function AppRoot() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Desktop Navbar */}
       <DesktopNavbar currentPage={currentPage} onNavigate={handleNavigation} />
-      
-      {/* Main Content */}
       <main className="min-h-screen">
         {renderCurrentPage()}
       </main>
-      
-      {/* Mobile Navbar */}
       <MobileNavbar currentPage={currentPage} onNavigate={handleNavigation} />
-
       <PWABadge />
     </div>
   );
