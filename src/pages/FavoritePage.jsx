@@ -1,6 +1,6 @@
 // src/pages/FavoritePage.jsx
 import { useState, useEffect } from "react";
-import RecipeCard from "../components/recipes/RecipeCard";
+import RecipeCard from "../components/recipes/RecipeCard.jsx"; // Path diperbarui
 import { ResepMakanan } from "../data/makanan";
 import { ResepMinuman } from "../data/minuman";
 

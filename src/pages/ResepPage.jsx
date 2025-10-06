@@ -1,9 +1,9 @@
 // src/pages/ResepPage.jsx
-import { useState, useEffect } from 'react';
-import { ResepMakanan } from '../data/makanan';
-import { ResepMinuman } from '../data/minuman';
-import RecipeCard from '../components/recipes/RecipeCard';
-import Pagination from '../components/recipes/Pagination';
+import { useState, useEffect } from "react";
+import { ResepMakanan } from "../data/makanan";
+import { ResepMinuman } from "../data/minuman";
+import RecipeCard from "../components/recipes/RecipeCard.jsx"; // Path diperbarui
+import Pagination from "../components/recipes/Pagination.jsx";
 
 export default function ResepPage({ onNavigate }) {
   const [recipes, setRecipes] = useState([]);
@@ -11,8 +11,14 @@ export default function ResepPage({ onNavigate }) {
   const [recipesPerPage] = useState(6);
 
   useEffect(() => {
-    const allMakanan = Object.values(ResepMakanan.resep).map(recipe => ({ ...recipe, type: 'makanan' }));
-    const allMinuman = Object.values(ResepMinuman.resep).map(recipe => ({ ...recipe, type: 'minuman' }));
+    const allMakanan = Object.values(ResepMakanan.resep).map((recipe) => ({
+      ...recipe,
+      type: "makanan",
+    }));
+    const allMinuman = Object.values(ResepMinuman.resep).map((recipe) => ({
+      ...recipe,
+      type: "minuman",
+    }));
     setRecipes([...allMakanan, ...allMinuman]);
   }, []);
 
@@ -35,7 +41,11 @@ export default function ResepPage({ onNavigate }) {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {currentRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} onNavigate={onNavigate} />
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              onNavigate={onNavigate}
+            />
           ))}
         </div>
         <Pagination
